@@ -14,14 +14,18 @@ $row = mysql_fetch_array($result1);
 if (empty($row)) {
     header("Location: http://www.wexue.top/qj/51.php?openid=" . $openid);
 }
-$result2 = mysql_query("SELECT count(*) FROM wfj51 WHERE sudu<" . $row['sudu']);
+$result2 = mysql_query("SELECT count(*) FROM wfj51 WHERE sudu<=" . $row['sudu']);
 $paiming = mysql_fetch_array($result2);
 $prize = "无";
 $prizeImg = "";
-$p = $paiming[0] + 1;
+$p = $paiming[0];
+$info='<p>请在<span class="line">5月1日</span>到<span class="line">5月3日</span>期间，光临<span class="line">王府井百货大兴店</span>五层会员中心，</p>'.
+
+    '<p>领取您的奖品，感谢您的支持。</p></div>';
 if ($p == 1) {
     $prize = "500元购物卡";
     $prizeImg = "img/card.jpg";
+
 }
 if (1 < $p && $p < 7) {
     $prize = "200元购物卡";
@@ -34,6 +38,11 @@ if (6 < $p && $p < 16) {
 if (15 < $p && $p < 316) {
     $prize = "减压锤";
     $prizeImg = "img/tui.jpg";
+}
+
+if (317 < $p ) {
+    $prize = "<span style='color: #000000;font-size: 16px'>来自王府井百货最真挚的节日祝福</span>";
+    $info='<span class="line" style="color: #f75741;margin-bottom: 50px">五一快乐</span>';
 }
 
 $result3 = mysql_query("SELECT sudu FROM wfj51 ORDER by sudu ASC limit 0,6 ");
@@ -104,7 +113,7 @@ mysql_close($con);
         button {
             background-color: #6db131;
             height: 40px;
-            width: 40%;
+            width: 80%;
             color: #ffffff;
             font-size: 18px;
             border: solid #f2f2f2 1px;
@@ -148,22 +157,20 @@ mysql_close($con);
 <div class="top">
     <img src="img/zan.jpg"></div>
 <div class="text">
+    <p><span class="line" style="color: #f75741">活动结束了</span></p>
     <p>恭喜小主，您只花了<span class="line"><?php echo $row['sudu']; ?></span>毫秒就拯救了小宇哥，</p>
 
-    <p>当前排名第<span class="line"><?php echo $p; ?></span>位，小宇哥给你点赞，</p>
+    <p>您的最终排名是第<span class="line"><?php echo $p; ?></span>位，小宇哥给你点赞，</p>
 
-    <p>你有可能获得<span class="line"><?php echo $prize; ?></span></p>
+    <p>你获得了<span class="line"><?php echo $prize; ?></span></p>
 
     <div>
         <img id="chui" src="<?php echo $prizeImg; ?>">
     </div>
-    <p>活动截止到<span class="line">4月30日24点</span>，多玩几次，</p>
-
-    <p>刷新排名获得更大奖品。</p></div>
+     <?php echo  $info;?>
 
 
-<button id="more" style="background-color: #f75741">五一大促</button>
-<button id="priceBtn">再玩一次</button>
+<button id="more" style="background-color: #f75741">查看五一大促，赢取更多优惠</button>
 <div class="prize-text hidden" id="prize">
     <img src="img/prize.png" id="prizeImg">
 </div>
@@ -245,9 +252,6 @@ function curlGet($url)
 
 <script>
     $(function () {
-        $("#priceBtn").on("tap", function () {
-            window.location.href = "http://p.widalian.com:9001/auth/openidAuth.php?callbackurl=http://www.wexue.top/qj/51.php&extend=1";
-        });
         $("#more").on("tap", function () {
             window.location.href = "http://viewer.maka.im/k/1HL2HE7A";
         });

@@ -106,19 +106,19 @@ function hitLogo() {
         successa.play();
         $("#qj").hide();
         $("#p5").show();
-        $url = "save.php";
-        var openid = getQueryStringByName("openid");
-        $.ajax({
-            url: $url,
-            type: 'get',
-            data: {
-                "openid": openid,
-                "sudu": 500 - time
-            },
-            success: function (data) {
-
-            }
-        });
+        //$url = "save.php";
+        //var openid = getQueryStringByName("openid");
+        //$.ajax({
+        //    url: $url,
+        //    type: 'get',
+        //    data: {
+        //        "openid": openid,
+        //        "sudu": 500 - time
+        //    },
+        //    success: function (data) {
+        //
+        //    }
+        //});
         new Hammer(document.getElementById("fllow")).on("tap", function (event) {
             $("#qcode").addClass("animated bounceInDown");
             $("#qcode").show();
